@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
+//import bcrypt from 'bcrypt';
 import { validationResult } from 'express-validator';
 
 import UserModel from '../models/User.js'
@@ -12,15 +12,15 @@ export const register = async (req, res) => {
         }
 
         const password = req.body.password;
-        const salt = await bcrypt.genSalt(10);
-        const Hash = await bcrypt.hash(password, salt);
+        //const salt = await bcrypt.genSalt(10);
+        //const Hash = await bcrypt.hash(password, salt);
     
         const doc = new UserModel({
             email: req.body.email,
             fullName: req.body.fullName,
             tel: req.body.tel,
-            passwordHash: Hash, 
-            //passwordHash: password,    
+            //passwordHash: Hash, 
+            passwordHash: password,    
         });
     
         const user = await doc.save();
@@ -60,8 +60,8 @@ export const login = async (req, res) =>{
             })
         }
     
-        const isValidPass = await bcrypt.compare(req.body.password, user._doc.passwordHash);
-        //const isValidPass = req.body.password === user._doc.passwordHash;//////////////
+        //const isValidPass = await bcrypt.compare(req.body.password, user._doc.passwordHash);
+        const isValidPass = req.body.password === user._doc.passwordHash;//////////////
     
         if(!isValidPass){
             return res.status(400).json({
