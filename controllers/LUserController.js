@@ -2,15 +2,19 @@ import LUserModel from '../models/LUser.js';
 
 export const update = async (req, res) => {
     try {        
-        const userId = "666f99c204b46398e657dcd9";
+        const userId = "666fa43f9853e66ec9d9f74d";
         const  email = req.body.email;
+        const  token = req.body.token;
 
         await LUserModel.updateOne(
             {
                 _id: userId,
             },
             {
-                $set: { email: email }, 
+                $set: { 
+                    email: email,
+                    token: token
+                }
             }
         );
         res.json({
@@ -26,7 +30,7 @@ export const update = async (req, res) => {
 
 export const getLUser = async (req, res) =>{
     try{
-        const kor = await LUserModel.findOne({_id: "666f99c204b46398e657dcd9"});
+        const kor = await LUserModel.findOne({_id: "666fa43f9853e66ec9d9f74d"});
 
         if (!kor) {
             return res.status(404).json({ message: 'kor не знайден' });
@@ -82,7 +86,8 @@ export const getOne = async (req, res) =>{
 export const create = async (req, res) => {
     try{
         const doc = new LUserModel({
-            email: req.body.email,            
+            email: req.body.email,  
+            token: req.body.token,            
         })
         const luser = await doc.save();
 
