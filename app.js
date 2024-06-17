@@ -11,6 +11,8 @@ import * as UserController from './controllers/UserController.js';
 import * as PostController from './controllers/PostController.js'; 
 import * as OrderController from './controllers/OrderController.js';
 import * as ProductsController from './controllers/ProductsController.js';
+import * as LUserController from './controllers/LUserController.js';
+
 
 mongoose
     .connect('mongodb+srv://mamba:2LCsKzqjHmFNDJLB@cluster0.ta4zajx.mongodb.net/solar-energy?retryWrites=true&w=majority')
@@ -59,3 +61,9 @@ app.get('/products/:id', ProductsController.getOne);
 app.post('/products',  ProductsController.create);
 app.delete('/products/:id', checkAuth, ProductsController.remove);
 app.patch('/products/:id', checkAuth, ProductsController.update);
+
+//app.get('/luser', LUserController.getAll);
+//app.get('/luser/:id', LUserController.getOne);
+app.post('/luser',  LUserController.create);
+app.patch('/luser', LUserController.update);
+app.get('/luser', LUserController.getLUser);
